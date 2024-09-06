@@ -48,6 +48,7 @@ class Utils(object):
         self.pcsserver = get_fastest_pcs_server()
         self.pcsurl = "https://{server}/rest/2.0/pcs/".format(
             server=self.pcsserver)
+        self.xpan_url = 'https://pan.baidu.com/rest/2.0/xpan/'
 
     def _remove_empty_items(self, data):
         for k, v in data.items():
@@ -65,7 +66,7 @@ class Utils(object):
             self._remove_empty_items(params)
 
         if not url:
-            url = self.pcsurl + uri
+            url = self.xpan_url + uri
         api = url
         if data or files:
             api = '%s?%s' % (url, urlencode(params))

@@ -246,9 +246,9 @@ class Bpan(Utils):
         remotepath = self._format_path(remotepath)
         params = {
             'path': os.path.join(self.BASE_APP_PATH, remotepath),
-            'by': 'name',
-            'order': 'asc'}
-        res = self._request('file', 'list',
+            'order': 'name',
+            'desc': '0'}
+        res = self._request('multimedia', 'listall',
                             extra_params=params)
         if res.status_code != 200:
             raise PathError("path not exists %s" % remotepath)
@@ -316,7 +316,7 @@ class Bpan(Utils):
                         fs_id = p["fs_id"]
                         path = p["path"][len(self.BASE_APP_PATH):] + "/"
                         type_ = "Dir"
-                        mtime = p["mtime"]
+                        mtime = p.get("mtime") or p.get("local_mtime") or p.get("server_mtime")
                         category = "-"
                     else:
                         size = human_size(p["size"])
@@ -324,7 +324,7 @@ class Bpan(Utils):
                         fs_id = p["fs_id"]
                         path = p["path"][len(self.BASE_APP_PATH):]
                         type_ = "File"
-                        mtime = p["mtime"]
+                        mtime = p.get("mtime") or p.get("local_mtime") or p.get("server_mtime")
                         category = category_decode(p["category"])
                     if not path.startswith("/"):
                         path = "/" + path
