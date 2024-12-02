@@ -222,7 +222,7 @@ def get_fastest_pcs_server_test():
 def get_fastest_pcs_server():
     url = 'http://pcs.baidu.com/rest/2.0/pcs/file?method=locateupload'
     ret = requests.get(url).json()
-    return ret['host']
+    return ret['server'][0]
 
 
 def parseArg():
